@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 25px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      text-align: center;
+      width: 100%;
+      max-width: 380px;
+      transition: 0.3s;
+    }
+    h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+    input {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #5a67d8;
+    }
+    a {
+      color: #667eea;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    p {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>  <div class="container">
+    <h2 id="form-title">Login</h2>
+    <form id="auth-form">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="email" id="email" placeholder="Gmail (Only for Registration)" style="display:none;">
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit" class="btn" id="submit-btn">Login</button>
+      <p><a href="#" id="forgot-password">Forgot Password?</a></p>
+    </form>
+    <p id="toggle-message">
+      Don't have an account? <a href="#" id="toggle-link">Create an account</a>
+    </p>
+  </div>  <script>
+    let mode = 'login';
+    const formTitle = document.getElementById('form-title');
+    const authForm = document.getElementById('auth-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const toggleMessage = document.getElementById('toggle-message');
+    const forgotPassword = document.getElementById('forgot-password');
+    const emailInput = document.getElementById('email');
+    const toggleLink = document.getElementById('toggle-link');
+
+    toggleLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (mode === 'login') {
+        mode = 'register';
+        formTitle.innerText = 'Create Account';
+        submitBtn.innerText = 'Register';
+        toggleMessage.innerHTML = 'Already have an account? <a href="#" id="toggle-link">Login</a>';
+        emailInput.style.display = 'block';
+        forgotPassword.style.display = 'none';
+      } else {
+        mode = 'login';
+        formTitle.innerText = 'Login';
+        submitBtn.innerText = 'Login';
+        toggleMessage.innerHTML = 'Don\'t have an account? <a href="#" id="toggle-link">Create an account</a>';
+        emailInput.style.display = 'none';
+        forgotPassword.style.display = 'block';
+      }
+    });
+
+    authForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (mode === 'login') {
+        const storedData = localStorage.getItem(username);
+        if (!storedData) {
+          alert('Account not found. Please register.');
+        } else {
+          const userData = JSON.parse(storedData);
+          if (userData.password !== password) {
+            alert('Incorrect password.');
+          } else {
+            alert('Login successful!');
+          }
+        }
+      } else {
+        const email = emailInput.value.trim();
+        if (!email) {
+          alert('Please enter your Gmail.');
+          return;
+        }
+        if (localStorage.getItem(username)) {
+          alert('Account already exists. Please login.');
+        } else {
+          const userData = { password: password, email: email };
+          localStorage.setItem(username, JSON.stringify(userData));
+          alert('Account created successfully!');
+          mode = 'login';
+          formTitle.innerText = 'Login';
+          submitBtn.innerText = 'Login';
+          toggleMessage.innerHTML = 'Don\'t have an account? <a href="#" id="toggle-link">Create an account</a>';
+          emailInput.style.display = 'none';
+          forgotPassword.style.display = 'block';
+        }
+      }
+      authForm.reset();
+    });
+
+    forgotPassword.addEventListener('click', function(e) {
+      e.preventDefault();
+      const username = prompt("Enter your username:") || '';
+      if (!username) {
+        alert('Username is required.');
+        return;
+      }
+      const storedData = localStorage.getItem(username);
+      if (!storedData) {
+        alert('No such user found.');
+      } else {
+        const userData = JSON.parse(storedData);
+        alert('Your password is: ' + userData.password);
+      }
+    });
+  </script></body>
+</html>
