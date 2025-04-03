@@ -23,10 +23,6 @@
       max-width: 380px;
       transition: 0.3s;
     }
-    h2 {
-      margin-bottom: 15px;
-      color: #333;
-    }
     .input-container {
       position: relative;
       width: 90%;
@@ -39,10 +35,6 @@
       border-radius: 8px;
       outline: none;
       transition: 0.3s;
-    }
-    input:focus {
-      border-color: #667eea;
-      box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
     }
     .show-password {
       position: absolute;
@@ -61,21 +53,6 @@
       border-radius: 8px;
       cursor: pointer;
       font-size: 16px;
-      margin-top: 10px;
-      transition: 0.3s;
-    }
-    .btn:hover {
-      background: #5a67d8;
-    }
-    a {
-      color: #667eea;
-      text-decoration: none;
-      font-size: 14px;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    p {
       margin-top: 10px;
     }
   </style>
@@ -100,12 +77,12 @@
   <script>
     function togglePassword() {
       const passwordInput = document.getElementById('password');
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-      } else {
-        passwordInput.type = 'password';
-      }
-    }let mode = 'login';
+      passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+    }if (localStorage.getItem('loggedInUser')) {
+  window.location.href = 'https://tanmay.code.blog';
+}
+
+let mode = 'login';
 const formTitle = document.getElementById('form-title');
 const authForm = document.getElementById('auth-form');
 const submitBtn = document.getElementById('submit-btn');
@@ -116,20 +93,66 @@ const toggleLink = document.getElementById('toggle-link');
 
 toggleLink.addEventListener('click', function(e) {
   e.preventDefault();
+  mode = mode === 'login' ? 'register' : 'login';
+  formTitle.innerText = mode === 'login' ? 'Login' : 'Create Account';
+  submitBtn.innerText = mode === 'login' ? 'Login' : 'Register';
+  emailInput.style.display = mode === 'login' ? 'none' : 'block';
+});
+
+authForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
   if (mode === 'login') {
-    mode = 'register';
-    formTitle.innerText = 'Create Account';
-    submitBtn.innerText = 'Register';
-    toggleMessage.innerHTML = 'Already have an account? <a href="#" id="toggle-link">Login</a>';
-    emailInput.style.display = 'block';
-    forgotPassword.style.display = 'none';
+    if (username === 'TANMAY' && password === 'Tanmay123') {
+      localStorage.setItem('loggedInUser', username);
+      alert('Welcome Admin! Redirecting to special page.');
+      window.location.href = 'https://tanmay.code.blog/admin';
+      return;
+    }
+    const userData = localStorage.getItem(username);
+    if (!userData) {
+      alert('User not found. Please register.');
+    } else {
+      const parsedData = JSON.parse(userData);
+      if (parsedData.password === password) {
+        localStorage.setItem('loggedInUser', username);
+        window.location.href = 'https://tanmay.code.blog';
+      } else {
+        alert('Incorrect password.');
+      }
+    }
   } else {
-    mode = 'login';
-    formTitle.innerText = 'Login';
-    submitBtn.innerText = 'Login';
-    toggleMessage.innerHTML = 'Don\'t have an account? <a href="#" id="toggle-link">Create an account</a>';
-    emailInput.style.display = 'none';
-    forgotPassword.style.display = 'block';
+    const email = emailInput.value.trim();
+    if (!email) {
+      alert('Please enter your email.');
+      return;
+    }
+    if (localStorage.getItem(username)) {
+      alert('User already exists. Please login.');
+    } else {
+      localStorage.setItem(username, JSON.stringify({ password, email }));
+      localStorage.setItem('loggedInUser', username);
+      alert('Account created successfully!');
+      window.location.href = 'https://tanmay.code.blog';
+    }
+  }
+  authForm.reset();
+});
+
+forgotPassword.addEventListener('click', function(e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value.trim();
+  if (!username) {
+    alert('Enter your username first.');
+    return;
+  }
+  const storedData = localStorage.getItem(username);
+  if (!storedData) {
+    alert('No user found.');
+  } else {
+    const parsedData = JSON.parse(storedData);
+    alert('Your password is: ' + parsedData.password);
   }
 });
 
