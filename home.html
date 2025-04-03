@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Animated Home Page</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Light Gradient Background */
+        body {
+            background: linear-gradient(to right, #f3f8ff, #e6f7ff);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            min-height: 100vh;
+        }
+
+        header {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            justify-content: center;
+            perspective: 800px; /* Enables 3D effect */
+        }
+
+        .app-item {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            width: 140px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.5s, box-shadow 0.5s;
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+
+        /* 3D Hover Effect */
+        .app-item:hover {
+            transform: rotateY(10deg) rotateX(5deg) scale(1.1);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .app-item img {
+            width: 55px;
+            height: 55px;
+            margin-bottom: 8px;
+            transition: transform 0.5s, filter 0.3s;
+        }
+
+        /* Icon Rotation */
+        .app-item:hover img {
+            transform: rotateY(180deg);
+            filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.2));
+        }
+
+        .app-item span {
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .app-item:nth-child(odd) {
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .app-item:nth-child(even) {
+            animation: float 3s infinite ease-in-out reverse;
+        }
+    </style>
+</head>
+<body>
+
+    <header> TA HOMES</header>
+
+    <div class="app-grid">
+        <!-- CODE EDITOR -->
+        <div class="app-item" onclick="window.location.href='https://chaudharytanmay10.github.io/tanmay-s-/'">
+            <img src="logo.png" alt="Code Editor">
+            <span>CODE EDITOR</span>
+        </div>
+
+        <!-- CHATGPT -->
+        <div class="app-item" onclick="window.location.href='https://openai.com/'">
+            <img src="gpt.png" alt="ChatGPT">
+            <span>CHATGPT</span>
+        </div>
+
+        <!-- MUSIC -->
+        <div class="app-item" onclick="window.location.href='https://music.youtube.com/'">
+            <img src="music.png" alt="Music">
+            <span>MUSIC</span>
+        </div>
+
+        <!-- GAMES -->
+        <div class="app-item" onclick="window.location.href='https://www.crazygames.com/'">
+            <img src="games.jpg" alt="Games">
+            <span>GAMES</span>
+        </div>
+    </div>
+
+</body>
+</html>
