@@ -78,11 +78,10 @@
     function togglePassword() {
       const passwordInput = document.getElementById('password');
       passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-    }if (localStorage.getItem('loggedInUser')) {
-  window.location.href = 'home.html';
-}
-
-let mode = 'login';
+    }
+    if (localStorage.getItem('loggedInUser')) {
+      window.location.href = 'home.html';
+    }let mode = 'login';
 const formTitle = document.getElementById('form-title');
 const authForm = document.getElementById('auth-form');
 const submitBtn = document.getElementById('submit-btn');
@@ -107,7 +106,7 @@ authForm.addEventListener('submit', function(e) {
     if (username === 'TANMAY' && password === 'Tanmay123') {
       localStorage.setItem('loggedInUser', username);
       alert('Welcome Admin! Redirecting to special page.');
-      window.location.href = 'https://tanmay.code.blog/admin';
+      window.location.href = 'home.html';
       return;
     }
     const userData = localStorage.getItem(username);
