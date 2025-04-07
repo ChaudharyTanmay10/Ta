@@ -1,160 +1,176 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login & Register</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fusion Hub - Login</title>
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
   <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* Body styling */
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      font-family: 'Roboto', sans-serif;
+      background: #fafafa;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      background: white;
-      padding: 25px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      text-align: center;
-      width: 100%;
-      max-width: 380px;
-      transition: 0.3s;
-    }
-    .input-container {
+      min-height: 100vh;
       position: relative;
+      overflow: hidden;
+    }
+    /* Decorative Corner Shapes */
+    .shape-top {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 180px;
+      height: 180px;
+      background: #fda085;
+      border-bottom-left-radius: 100%;
+      z-index: 1;
+    }
+    .shape-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 250px;
+      height: 250px;
+      background: #f6d365;
+      border-top-right-radius: 100%;
+      z-index: 1;
+    }
+    /* Centered login container */
+    .login-container {
+      position: relative;
+      z-index: 2;
       width: 90%;
-      margin: 10px auto;
+      max-width: 400px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      text-align: center;
+    }
+    .login-header {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    .login-subtitle {
+      font-size: 0.95rem;
+      color: #999;
+      margin-bottom: 2rem;
+    }
+    /* Form fields */
+    .form-group {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+      color: #555;
     }
     input {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.95rem;
       outline: none;
-      transition: 0.3s;
     }
-    .show-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .btn {
+    /* Login button */
+    .login-btn {
       width: 100%;
-      padding: 12px;
-      background: #667eea;
-      color: white;
+      padding: 0.8rem;
+      background: #fda085;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
       cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
+      margin-top: 1rem;
+    }
+    .login-btn:hover {
+      background: #f88f60;
+    }
+    /* Links below form */
+    .links-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+    }
+    .link {
+      color: #fda085;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <div class="container" id="login-container">
-    <h2 id="form-title">Login</h2>
-    <form id="auth-form">
-      <input type="text" id="username" placeholder="Username" required>
-      <input type="email" id="email" placeholder="Gmail (Only for Registration)" style="display:none;">
-      <div class="input-container">
-        <input type="password" id="password" placeholder="Password" required>
-        <span class="show-password" onclick="togglePassword()">👁️</span>
+  <!-- Decorative shapes -->
+  <div class="shape-top"></div>
+  <div class="shape-bottom"></div>
+
+  <!-- Login Container -->
+  <div class="login-container" id="login-container">
+    <div class="login-header">Fusion Hub</div>
+    <div class="login-subtitle">Please sign in to continue</div>
+    
+    <!-- Normal login form -->
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="user@example.com">
       </div>
-      <button type="submit" class="btn" id="submit-btn">Login</button>
-      <p><a href="#" id="forgot-password">Forgot Password?</a></p>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="login-btn">Login</button>
+      <div class="links-row">
+        <a href="#" class="link">Forgot?</a>
+        <a href="#" class="link">Sign Up</a>
+      </div>
     </form>
-    <p id="toggle-message">
-      Don't have an account? <a href="#" id="toggle-link">Create an account</a>
-    </p>
   </div>
+  
   <script>
-    function togglePassword() {
-      const passwordInput = document.getElementById('password');
-      passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-    }
-    if (localStorage.getItem('loggedInUser')) {
-      window.location.href = 'home.html';
-    }let mode = 'login';
-const formTitle = document.getElementById('form-title');
-const authForm = document.getElementById('auth-form');
-const submitBtn = document.getElementById('submit-btn');
-const toggleMessage = document.getElementById('toggle-message');
-const forgotPassword = document.getElementById('forgot-password');
-const emailInput = document.getElementById('email');
-const toggleLink = document.getElementById('toggle-link');
-
-toggleLink.addEventListener('click', function(e) {
-  e.preventDefault();
-  mode = mode === 'login' ? 'register' : 'login';
-  formTitle.innerText = mode === 'login' ? 'Login' : 'Create Account';
-  submitBtn.innerText = mode === 'login' ? 'Login' : 'Register';
-  emailInput.style.display = mode === 'login' ? 'none' : 'block';
-});
-
-authForm.addEventListener('submit', function(e) {
-  e.preventDefault();
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value.trim();
-  if (mode === 'login') {
-    if (username === 'TANMAY' && password === 'Tanmay123') {
-      localStorage.setItem('loggedInUser', username);
-      alert('Welcome Admin! Redirecting to special page.');
-      window.location.href = 'home.html';
-      return;
-    }
-    const userData = localStorage.getItem(username);
-    if (!userData) {
-      alert('User not found. Please register.');
-    } else {
-      const parsedData = JSON.parse(userData);
-      if (parsedData.password === password) {
-        localStorage.setItem('loggedInUser', username);
-        window.location.href = 'home.html';
-      } else {
-        alert('Incorrect password.');
+    // Check if user is already logged in (SSO token exists)
+    (function() {
+      const token = localStorage.getItem('fusionHubToken');
+      if (token) {
+        // Automatically redirect to home.html if token exists
+        window.location.href = "home.html";
       }
-    }
-  } else {
-    const email = emailInput.value.trim();
-    if (!email) {
-      alert('Please enter your email.');
-      return;
-    }
-    if (localStorage.getItem(username)) {
-      alert('User already exists. Please login.');
-    } else {
-      localStorage.setItem(username, JSON.stringify({ password, email }));
-      localStorage.setItem('loggedInUser', username);
-      alert('Account created successfully!');
-      window.location.href = 'home.html';
-    }
-  }
-  authForm.reset();
-});
-
-forgotPassword.addEventListener('click', function(e) {
-  e.preventDefault();
-  const username = document.getElementById('username').value.trim();
-  if (!username) {
-    alert('Enter your username first.');
-    return;
-  }
-  const storedData = localStorage.getItem(username);
-  if (!storedData) {
-    alert('No user found.');
-  } else {
-    const parsedData = JSON.parse(storedData);
-    alert('Your password is: ' + parsedData.password);
-  }
-});
-
+    })();
+    
+    // Handle normal login (mock implementation)
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // In production, send the email/password to your backend for authentication.
+      // Here we simulate a successful login by storing a token in localStorage.
+      localStorage.setItem('fusionHubToken', 'FAKE_TOKEN_NORMAL_LOGIN');
+      // Redirect to home.html after successful login.
+      window.location.href = "home.html";
+    });
   </script>
 </body>
 </html>
