@@ -1,130 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Animated Home Page</title>
-    <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-
-        /* Light Gradient Background */
-        body {
-            background: linear-gradient(to right, #f3f8ff, #e6f7ff);
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-            min-height: 100vh;
-        }
-
-        header {
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            justify-content: center;
-            perspective: 800px; /* Enables 3D effect */
-        }
-
-        .app-item {
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 15px;
-            padding: 15px;
-            text-align: center;
-            width: 140px;
-            height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-            transition: transform 0.5s, box-shadow 0.5s;
-            cursor: pointer;
-            transform-style: preserve-3d;
-        }
-
-        /* 3D Hover Effect */
-        .app-item:hover {
-            transform: rotateY(10deg) rotateX(5deg) scale(1.1);
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .app-item img {
-            width: 55px;
-            height: 55px;
-            margin-bottom: 8px;
-            transition: transform 0.5s, filter 0.3s;
-        }
-
-        /* Icon Rotation */
-        .app-item:hover img {
-            transform: rotateY(180deg);
-            filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.2));
-        }
-
-        .app-item span {
-            font-size: 1em;
-            font-weight: bold;
-            color: #333;
-        }
-
-        /* Floating Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .app-item:nth-child(odd) {
-            animation: float 3s infinite ease-in-out;
-        }
-
-        .app-item:nth-child(even) {
-            animation: float 3s infinite ease-in-out reverse;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fusion Hub - Vibrant 3D UI</title>
+  <!-- Using a modern Google Font for a professional look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* Body Background with Multi-color Gradient and Animation */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+      background-size: 400% 400%;
+      animation: bodyBgAnimation 15s ease infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+      padding-bottom: 80px; /* leave space for bottom nav */
+    }
+    @keyframes bodyBgAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Splash Screen with Vivid Gradient */
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+      overflow: hidden;
+      will-change: opacity;
+    }
+    .splash-screen::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* Vivid multi-color radial gradient */
+      background: radial-gradient(circle, rgba(255,105,180,0.3) 0%, rgba(30,144,255,0.3) 40%, rgba(50,205,50,0.3) 70%, transparent 90%);
+      animation: splashBgAnimation 2.5s ease-in-out infinite;
+      z-index: -1;
+    }
+    @keyframes splashBgAnimation {
+      0% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 0.9; transform: scale(1.05); }
+      100% { opacity: 0.6; transform: scale(1); }
+    }
+    .splash-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .splash-logo {
+      font-size: 3em;
+      font-weight: 700;
+      color: #333;
+      will-change: transform, opacity;
+    }
+    
+    /* Background Decorative Elements */
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.02), transparent 70%);
+    }
+    .background::before {
+      content: "";
+      position: absolute;
+      top: 5%;
+      left: 15%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,182,193,0.6) 0%, transparent 70%);
+      filter: blur(40px);
+    }
+    .background::after {
+      content: "";
+      position: absolute;
+      bottom: 10%;
+      right: 15%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(135,206,250,0.6) 0%, transparent 70%);
+      filter: blur(30px);
+    }
+    
+    /* Header Styling */
+    header {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #333;
+      margin: 20px 0 40px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      align-self: flex-start;
+      will-change: opacity;
+    }
+    
+    /* Responsive Grid Container with 3D Perspective */
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 30px;
+      width: 100%;
+      max-width: 800px;
+      z-index: 2;
+      margin-bottom: 40px;
+      perspective: 1000px;
+    }
+    
+    /* Vibrant Glassmorphism Card Style with Full 3D Hover Animation */
+    .app-item {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      position: relative;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .app-item:hover {
+      transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+      box-shadow: 0 12px 24px rgba(255,105,180,0.4);
+    }
+    .app-item img {
+      width: 70px;
+      height: 70px;
+      margin-bottom: 12px;
+      transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      will-change: transform;
+    }
+    .app-item:hover img {
+      transform: rotateY(180deg);
+    }
+    .app-item span {
+      display: block;
+      font-size: 1.1em;
+      font-weight: 700;
+      color: #333;
+      margin-top: 10px;
+      will-change: opacity;
+    }
+    
+    /* Floating Decorative Shape with Slow 3D Rotation and Color Accents */
+    .floating-shape {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,105,180,0.3) 0%, rgba(30,144,255,0.3) 50%, rgba(50,205,50,0.3) 100%);
+      border-radius: 50%;
+      filter: blur(50px);
+      z-index: -1;
+      animation: rotateShape 12s linear infinite;
+      will-change: transform;
+    }
+    @keyframes rotateShape {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    /* 4K Optimization: Scale elements for ultra-high resolution displays */
+    @media (min-width: 3840px) {
+      .splash-logo { font-size: 5em; }
+      .loader { width: 80px; height: 80px; border-width: 10px; }
+      header { font-size: 4em; }
+      .app-grid { gap: 50px; max-width: 1600px; }
+      .app-item { padding: 40px; border-radius: 40px; }
+      .app-item img { width: 140px; height: 140px; }
+      .app-item span { font-size: 2em; }
+      .floating-shape { width: 600px; height: 600px; }
+    }
+    
+    /* Bottom Navigation Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 999;
+    }
+    .nav-item {
+      text-decoration: none;
+      font-size: 1.2em;
+      font-weight: 700;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+    .nav-item:hover {
+      color: #ff69b4;
+    }
+  </style>
 </head>
 <body>
-
-    <header> TA HOMES</header>
-
-    <div class="app-grid">
-        <!-- CODE EDITOR -->
-        <div class="app-item" onclick="window.location.href='https://chaudharytanmay10.github.io/tanmay-s-/'">
-            <img src="logo.png" alt="Code Editor">
-            <span>CODE EDITOR</span>
-        </div>
-
-        <!-- CHATGPT -->
-        <div class="app-item" onclick="window.location.href='https://chat.openai.com/'">
-            <img src="gpt.png" alt="ChatGPT">
-            <span>CHATGPT</span>
-        </div>
-
-        <!-- MUSIC -->
-        <div class="app-item" onclick="window.location.href='https://m.soundcloud.com/'">
-            <img src="music.png" alt="Music">
-            <span>MUSIC</span>
-        </div>
-
-        <!-- GAMES -->
-        <div class="app-item" onclick="window.location.href='https://www.crazygames.com/'">
-            <img src="games.jpg" alt="Games">
-            <span>GAMES</span>
-        </div>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash-screen">
+    <div class="splash-logo">FUSION HUB</div>
+    <div class="loader"></div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="background"></div>
+  <header>FUSION HUB</header>
+  <div class="app-grid">
+    <!-- CODE EDITOR -->
+    <div class="app-item" onclick="window.location.href='https://chaudharytanmay10.github.io/tanmay-s-/'">
+      <img src="logo.png" alt="Code Editor">
+      <span>Code Editor</span>
     </div>
-
+    <!-- CHATGPT -->
+    <div class="app-item" onclick="window.location.href='https://chat.openai.com/'">
+      <img src="gpt.png" alt="ChatGPT">
+      <span>ChatGPT</span>
+    </div>
+    <!-- MUSIC -->
+    <div class="app-item" onclick="window.location.href='https://m.soundcloud.com/'">
+      <img src="music.png" alt="Music">
+      <span>Music</span>
+    </div>
+    <!-- GAMES -->
+    <div class="app-item" onclick="window.location.href='https://www.crazygames.com/'">
+      <img src="games.jpg" alt="Games">
+      <span>Games</span>
+    </div>
+    <!-- Download Movies -->
+    <div class="app-item" onclick="window.location.href='https://vegamovies.td/'">
+      <img src="vm.jpg" alt="Download Movies">
+      <span>Download Movies</span>
+    </div>
+    <!-- ANIME -->
+    <div class="app-item" onclick="window.location.href='https://9anime.org.lv/'">
+      <img src="Anime.jpg" alt="Anime">
+      <span>Anime</span>
+    </div>
+  </div>
+  <div class="floating-shape"></div>
+  
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <a href="/home" class="nav-item">HOME</a>
+    <a href="/profile" class="nav-item">PROFILE</a>
+  </div>
+  
+  <script>
+    // Once the window loads, hide the splash screen after a short delay.
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        document.getElementById("splash-screen").classList.add("hidden");
+      }, 1500);
+    });
+  </script>
 </body>
 </html>
