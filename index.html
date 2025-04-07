@@ -3,39 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fusion Hub - Login</title>
-  <!-- Google Font -->
+  <title>Fusion Hub - Mobile Login</title>
+  <!-- Using a modern Google Font for a professional look -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" 
     rel="stylesheet"
   />
   <style>
-    /* Global Reset */
+    /* Reset */
     * {
-      margin: 0;
-      padding: 0;
+      margin: 0; 
+      padding: 0; 
       box-sizing: border-box;
     }
-    /* Body styling */
     body {
       font-family: 'Roboto', sans-serif;
-      background: #fafafa;
+      background: #fefefe;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      position: relative;
       overflow: hidden;
+      position: relative;
     }
-    /* Decorative Corner Shapes */
+
+    /* Corner shapes (inspired by the reference image) */
     .shape-top {
       position: absolute;
       top: 0;
       right: 0;
       width: 180px;
       height: 180px;
-      background: #fda085;
+      background: #fda085; /* Light orange */
       border-bottom-left-radius: 100%;
       z-index: 1;
     }
@@ -43,39 +43,42 @@
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 250px;
-      height: 250px;
-      background: #f6d365;
+      width: 220px;
+      height: 220px;
+      background: #f6d365; /* Soft peach */
       border-top-right-radius: 100%;
       z-index: 1;
     }
-    /* Centered login container */
+
+    /* Container simulating a mobile screen */
     .login-container {
       position: relative;
-      z-index: 2;
+      z-index: 2; /* above corner shapes */
       width: 90%;
-      max-width: 400px;
+      max-width: 360px;
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
       padding: 2rem;
-      text-align: center;
+      text-align: left;
     }
-    .login-header {
-      font-size: 1.8rem;
+
+    /* Page Title (Login or Create Account) */
+    .page-title {
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
       color: #333;
     }
-    .login-subtitle {
+    .subtitle {
       font-size: 0.95rem;
       color: #999;
       margin-bottom: 2rem;
     }
-    /* Form fields */
+
+    /* Form Fields */
     .form-group {
       margin-bottom: 1rem;
-      text-align: left;
     }
     label {
       display: block;
@@ -91,8 +94,10 @@
       font-size: 0.95rem;
       outline: none;
     }
-    /* Login button */
-    .login-btn {
+
+    /* Form Buttons */
+    .login-btn,
+    .signup-btn {
       width: 100%;
       padding: 0.8rem;
       background: #fda085;
@@ -103,11 +108,14 @@
       color: #fff;
       cursor: pointer;
       margin-top: 1rem;
+      transition: background 0.3s ease;
     }
-    .login-btn:hover {
+    .login-btn:hover,
+    .signup-btn:hover {
       background: #f88f60;
     }
-    /* Links below form */
+
+    /* Helper Links (Forgot, Sign Up, etc.) */
     .links-row {
       display: flex;
       justify-content: space-between;
@@ -122,55 +130,161 @@
     .link:hover {
       text-decoration: underline;
     }
+    .text-center {
+      text-align: center;
+    }
+
+    /* Toggle forms (hidden by default) */
+    #login-section,
+    #signup-section {
+      display: none;
+    }
+    /* We'll show login by default in JS or fallback to login if JS is disabled */
   </style>
 </head>
 <body>
-  <!-- Decorative shapes -->
+  <!-- Corner Shapes -->
   <div class="shape-top"></div>
   <div class="shape-bottom"></div>
 
-  <!-- Login Container -->
-  <div class="login-container" id="login-container">
-    <div class="login-header">Fusion Hub</div>
-    <div class="login-subtitle">Please sign in to continue</div>
-    
-    <!-- Normal login form -->
-    <form id="login-form">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" required placeholder="user@example.com">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" required placeholder="••••••••">
-      </div>
-      <button type="submit" class="login-btn">Login</button>
-      <div class="links-row">
-        <a href="#" class="link">Forgot?</a>
-        <a href="#" class="link">Sign Up</a>
-      </div>
-    </form>
+  <!-- Main Container -->
+  <div class="login-container">
+    <!-- LOGIN SECTION -->
+    <div id="login-section">
+      <div class="page-title">Login</div>
+      <div class="subtitle">Please sign in to continue</div>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="user123@email.com" 
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" 
+                 required>
+        </div>
+        <button type="submit" class="login-btn">LOGIN →</button>
+        <div class="links-row">
+          <a href="#" class="link">Forgot?</a>
+          <a href="#" class="link" id="to-signup">Sign Up</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- SIGNUP SECTION -->
+    <div id="signup-section">
+      <div class="page-title">Create Account</div>
+      <div class="subtitle">Enter details to sign up</div>
+      <form id="signup-form">
+        <div class="form-group">
+          <label for="signup-name">Full Name</label>
+          <input type="text" id="signup-name" placeholder="e.g. John Williams" 
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" placeholder="user@example.com" 
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" placeholder="••••••••" 
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="signup-confirm">Confirm Password</label>
+          <input type="password" id="signup-confirm" placeholder="••••••••" 
+                 required>
+        </div>
+        <button type="submit" class="signup-btn">SIGN UP →</button>
+        <div class="text-center" style="margin-top: 0.5rem;">
+          Already have an account? 
+          <a href="#" class="link" id="to-login">Sign In</a>
+        </div>
+      </form>
+    </div>
   </div>
-  
+
   <script>
-    // Check if user is already logged in (SSO token exists)
-    (function() {
-      const token = localStorage.getItem('fusionHubToken');
-      if (token) {
-        // Automatically redirect to home.html if token exists
+    /***********************************************************
+     * Simple Cookie Storage for Demo
+     * WARNING: Not secure for real production usage
+     ***********************************************************/
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days*24*60*60*1000));
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/; Secure; SameSite=Lax";
+    }
+    function getCookie(name) {
+      const cname = name + "=";
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i].trim();
+        if (c.indexOf(cname) === 0) {
+          return c.substring(cname.length, c.length);
+        }
+      }
+      return "";
+    }
+
+    // If user data exists in cookie, auto-redirect to home.html
+    const storedUserData = getCookie("fusionHubUser");
+    if (storedUserData) {
+      // We have credentials stored. In real app, you'd verify token or credentials on server.
+      window.location.href = "home.html";
+    }
+
+    // Show login section by default
+    document.getElementById("login-section").style.display = "block";
+
+    // Toggle between login and signup
+    document.getElementById("to-signup").addEventListener("click", function(e) {
+      e.preventDefault();
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("signup-section").style.display = "block";
+    });
+    document.getElementById("to-login").addEventListener("click", function(e) {
+      e.preventDefault();
+      document.getElementById("signup-section").style.display = "none";
+      document.getElementById("login-section").style.display = "block";
+    });
+
+    // Handle LOGIN
+    document.getElementById("login-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+      if (email && password) {
+        // WARNING: Storing plain text password is not secure. Demo only.
+        const userData = JSON.stringify({ email: email, password: password });
+        // Set cookie to last 365 days
+        setCookie("fusionHubUser", userData, 365);
+        // Redirect
         window.location.href = "home.html";
       }
-    })();
-    
-    // Handle normal login (mock implementation)
-    document.getElementById('login-form').addEventListener('submit', function(e) {
+    });
+
+    // Handle SIGNUP
+    document.getElementById("signup-form").addEventListener("submit", function(e) {
       e.preventDefault();
-      // In production, send the email/password to your backend for authentication.
-      // Here we simulate a successful login by storing a token in localStorage.
-      localStorage.setItem('fusionHubToken', 'FAKE_TOKEN_NORMAL_LOGIN');
-      // Redirect to home.html after successful login.
+      const name = document.getElementById("signup-name").value;
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+      const confirm = document.getElementById("signup-confirm").value;
+
+      if (password !== confirm) {
+        alert("Passwords do not match!");
+        return;
+      }
+      // In real app, you'd store user details in your database. Here we just store in a cookie.
+      // This is purely demonstration and not secure.
+      const userData = JSON.stringify({ name: name, email: email, password: password });
+      setCookie("fusionHubUser", userData, 365);
       window.location.href = "home.html";
     });
   </script>
 </body>
-</html>
+  </html>
